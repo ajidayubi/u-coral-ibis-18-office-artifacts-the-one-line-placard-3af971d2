@@ -13,6 +13,11 @@ if (LINE.length < 1 || LINE.length > 180 || LINE.trim().length === 0) {
   );
 }
 
+// A placard is one line: any line break would split it into two labels.
+if (/[\r\n]/.test(LINE)) {
+  throw new Error("entry line must not contain a line break");
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", LINE, "utf8");
 console.log(LINE);
